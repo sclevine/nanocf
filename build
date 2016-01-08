@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+nanocf_dir=$(cd `dirname $0` && pwd)
+images_dir=$nanocf_dir/micropcf/images
+
+in_place_sed="sed -i -e '1i nameserver 127.0.0.1' /etc/resolv.conf"
+overwrite_sed='echo -e "nameserver 127.0.0.1\n$(cat /etc/resolv.conf)" > /etc/resolv.conf'
+consul_agent_ctl="$images_dir/releases/cf-release/src/consul-release/jobs/consul_agent/templates/agent_ctl.sh.erb"
+perl -p -i -e "s#\\Q$in_place_sed\\E#$overwrite_sed#" $consul_agent_ctl
+
+common_utils="$images_dir/releases/cf-release/src/common/utils.sh"
+pid_utils="$images_dir/releases/diego-release/src/pid_utils.sh"
+without_docker="grep -q '/instance' /proc/self/cgroup"
+with_docker="grep -q '/instance\|/docker' /proc/self/cgroup"
+perl -p -i -e "s#\\Q$without_docker\\E#$with_docker#" $common_utils $pid_utils
+
+releases='diego cf garden-linux etcd'
+$images_dir/bosh/build $nanocf_dir/assets $releases
+
+docker build -t nanocf-initial $@ "$nanocf_dir"
+id=$(docker run -d -m 3g --privileged nanocf-initial)
+docker attach "$id"
+docker commit "$id" sclevine/nanocf

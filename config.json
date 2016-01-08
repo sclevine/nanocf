@@ -1,0 +1,32 @@
+{
+  "assets_dir": "/opt/bosh-provisioner/assets",
+  "repos_dir": "/opt/bosh-provisioner/repos",
+  "tmp_dir": "/opt/bosh-provisioner/tmp",
+
+  "event_log": {
+    "device_type": "text"
+  },
+
+  "blobstore": {
+    "provider": "local",
+    "options": {
+      "blobstore_path": "/opt/bosh-provisioner/blobstore"
+    }
+  },
+
+  "vm_provisioner": {
+    "full_stemcell_compatibility": false,
+
+    "agent_provisioner": {
+      "infrastructure": "warden",
+      "platform":       "ubuntu",
+      "configuration":  null,
+
+      "mbus": "https://user:password@127.0.0.1:4321/agent"
+    }
+  },
+
+  "deployment_provisioner": {
+    "manifest_path": "/var/micropcf/manifest.yml"
+  }
+}

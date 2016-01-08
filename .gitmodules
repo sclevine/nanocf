@@ -1,0 +1,3 @@
+[submodule "micropcf"]
+	path = micropcf
+	url = https://github.com/pivotal-cf/micropcf
