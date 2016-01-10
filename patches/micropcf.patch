@@ -1,0 +1,13 @@
+diff --git a/images/scripts/run b/images/scripts/run
+index 5af55bc..86b6146 100755
+--- a/images/scripts/run
++++ b/images/scripts/run
+@@ -32,7 +32,7 @@ grep -q 'export TMPDIR=\/tmp\/cc_tmp' "$cc_worker_ctl" || sed -i '2iexport TMPDI
+ 
+ monit="/var/vcap/bosh/bin/monit"
+ 
+-start runsvdir || true
++/usr/sbin/runsvdir-start &
+ 
+ >&3 echo "Waiting for services to start..."
+ started_services() { $monit summary | grep -E '(running|accessible|Timestamp changed|PID changed)' | wc -l; }

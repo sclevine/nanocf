@@ -1,0 +1,11 @@
+diff --git a/src/common/utils.sh b/src/common/utils.sh
+index 3afe97b..63d0b0e 100644
+--- a/src/common/utils.sh
++++ b/src/common/utils.sh
+@@ -84,5 +84,5 @@ kill_and_wait() {
+ }
+ 
+ running_in_container() {
+-  grep -q '/instance' /proc/self/cgroup
++  grep -q '/instance\|/docker' /proc/self/cgroup
+ }

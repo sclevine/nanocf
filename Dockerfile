@@ -4,8 +4,9 @@ ENV HOME /root
 ENV CF_VERSION 6.14.1
 ENV RTR_VERSION 2.3.0
 
-CMD ["/var/micropcf/provision"]
+EXPOSE 80 443 2222
 VOLUME ["/var/vcap/data/garden/aufs_graph"]
+CMD ["/var/micropcf/provision"]
 
 RUN \
   apt-get -qqy install software-properties-common && \
@@ -26,6 +27,3 @@ ADD provision /var/micropcf/
 
 ADD micropcf/images/manifest.yml /tmp/
 ADD micropcf/images/scripts/* /var/micropcf/
-
-RUN \
-  sed -i 's%start runsvdir \|\| true%/usr/sbin/runsvdir-start \&%g' /var/micropcf/run

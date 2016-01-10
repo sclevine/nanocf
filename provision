@@ -5,8 +5,8 @@ set -e
 mkdir -p /var/vcap/store
 
 ip=$(ip route get 1 | awk '{print $NF;exit}')
+echo local.micropcf.io > /var/micropcf/domain
 echo $ip > /var/micropcf/ip
-echo ${ip}.xip.io > /var/micropcf/domain
 sed "s/placeholder-ip/${ip}/g" /tmp/manifest.yml > /var/micropcf/manifest.yml
 
 apt-get -qqy install runit
