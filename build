@@ -30,4 +30,4 @@ releases='diego cf garden-linux etcd'
 docker build -t "$image" $@ "$nanocf_dir"
 id=$(docker run -d -m 3g --privileged "$image")
 docker attach "$id"
-docker commit -c 'CMD ["/var/micropcf/run"]' "$id" "$image"
+docker commit -c 'ENTRYPOINT ["/var/micropcf/run-docker"]' "$id" "$image"

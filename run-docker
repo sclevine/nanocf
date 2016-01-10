@@ -1,0 +1,9 @@
+#!/bin/bash
+
+domain=$1
+
+if [[ -z $domain ]]; then
+  domain=$(ip route get 1 | awk '{print $NF;exit}').xip.io
+fi
+
+/var/micropcf/run "$domain"

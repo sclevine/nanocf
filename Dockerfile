@@ -6,7 +6,7 @@ ENV RTR_VERSION 2.3.0
 
 EXPOSE 80 443 2222
 VOLUME ["/var/vcap/data/garden/aufs_graph"]
-CMD ["/var/micropcf/provision"]
+ENTRYPOINT ["/var/micropcf/provision"]
 
 RUN \
   apt-get -qqy install software-properties-common && \
@@ -24,6 +24,7 @@ RUN \
 ADD assets /opt/bosh-provisioner/assets
 ADD config.json /opt/bosh-provisioner/
 ADD provision /var/micropcf/
+ADD run-docker /var/micropcf/
 
 ADD micropcf/images/manifest.yml /tmp/
 ADD micropcf/images/scripts/* /var/micropcf/
