@@ -1,4 +1,7 @@
 #!/bin/bash
 
-docker-machine create nanocf -d vmwarefusion --vmwarefusion-disk-size "40000" --vmwarefusion-memory-size "4096" >&2
+docker-machine create nanocf -d vmwarefusion \
+  --vmwarefusion-disk-size "40000" \
+  --vmwarefusion-memory-size "4096" \
+  --vmwarefusion-cpu-count "-1" >&2
 docker-machine env nanocf
