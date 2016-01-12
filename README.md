@@ -1,4 +1,4 @@
-# NanoCF is a full CF installation in a single Docker container
+# NanoCF: Cloud Foundry in a single Docker container
 
 ## Setup
 
