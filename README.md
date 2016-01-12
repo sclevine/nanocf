@@ -1,4 +1,6 @@
-# NanoCF: Cloud Foundry in a single Docker container
+# NanoCF
+
+NanoCF is a full Cloud Foundry installation in a single Docker container.
 
 ## Setup
 
@@ -16,7 +18,7 @@ To run NanoCF:
 ```bash
   $ docker run -m 3g --privileged sclevine/nanocf
 ```
-This will make <container-ip>.xip.io the CF system domain.
+This will make \<container-ip\>.xip.io the CF system domain.
 
 To run NanoCF with a custom domain:
 ```bash
