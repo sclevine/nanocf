@@ -36,12 +36,6 @@ workspace in the VM and using the `cf` utility installed in the container:
   > $ cf push ...
 ```
 
-Alternatively, NanoCF can be bound to ports 80, 443, and 2222 on its containing docker-machine:
-```bash
-  $ docker run -m 3g --privileged -P sclevine/nanocf <docker-machine-ip>.xip.io
-```
-This will allow you to push apps directly from your host system.
-
 ## Building
 
 To build MicroPCF:
