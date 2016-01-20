@@ -4,4 +4,4 @@ image: docker:///sclevine/nanocf
 inputs:
 - name: nanocf
 run:
-  path: nanocf/ci/tasks/run/run.sh
+  path: nanocf/ci/tasks/push-app/run.sh

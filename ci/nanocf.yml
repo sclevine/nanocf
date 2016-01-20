@@ -12,12 +12,34 @@ resources:
       paths: [build,image,micropcf,patches]
 
 jobs:
-  - name: run-nanocf
+  - name: push-app-ssd
     plan:
     - get: nanocf
       params:
         submodules: none
     - task: run
-      file: nanocf/ci/tasks/run/task.yml
+      tags: [ssd-worker]
+      file: nanocf/ci/tasks/push-app/task.yml
+      config:
+        privileged: true
+
+  - name: push-app-ebs
+    plan:
+    - get: nanocf
+      params:
+        submodules: none
+    - task: run
+      file: nanocf/ci/tasks/push-app/task.yml
+      config:
+        privileged: true
+
+  - name: push-app-vsphere
+    plan:
+    - get: nanocf
+      params:
+        submodules: none
+    - task: run
+      tags: [vsphere-linux-worker]
+      file: nanocf/ci/tasks/push-app/task.yml
       config:
         privileged: true

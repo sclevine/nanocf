@@ -2,13 +2,8 @@
 
 set -ex
 
-ip=$(ip route get 1 | awk '{print $NF;exit}')
 damain=local.nanocf.io
-
-echo "address=/$domain/$ip" > /etc/dnsmasq.d/domain
-/etc/init.d/dnsmasq start
-
-/var/micropcf/run "$domain"
+DOCKER_RUN_BLOCKS=false /var/micropcf/docker-run "$domain"
 
 cf api "api.$domain" --skip-ssl-validation
 cf auth admin admin
