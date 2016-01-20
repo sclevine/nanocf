@@ -1,0 +1,21 @@
+resources:
+  - name: nanocf
+    type: git
+    source:
+      uri: https://github.com/sclevine/nanocf
+      branch: master
+  - name: image-changes
+    type: git
+    source:
+      uri: https://github.com/sclevine/nanocf
+      branch: master
+      paths: [build,image,micropcf,patches]
+
+jobs:
+  - name: run-nanocf
+    plan:
+    - get: nanocf
+    - task: run
+      file: nanocf/ci/tasks/run/task.yml
+      config:
+        privileged: true

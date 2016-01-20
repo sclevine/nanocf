@@ -1,0 +1,7 @@
+---
+platform: linux
+image: docker:///sclevine/nanocf
+inputs:
+- name: nanocf
+run:
+  path: nanocf/tasks/run/run.sh
