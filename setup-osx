@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [[ $(docker-machine inspect -f {{.Name}} nanocf 2>/dev/null) != "nanocf" ]]; then
+  if [[ $1 = vmware ]]; then
+    docker-machine create nanocf -d vmwarefusion \
+      --vmwarefusion-disk-size "40000" \
+      --vmwarefusion-memory-size "4096" \
+      --vmwarefusion-cpu-count "-1" >&2
+  elif [[ $1 = virtualbox ]]; then
+    docker-machine create nanocf -d virtualbox \
+      --virtualbox-disk-size "40000" \
+      --virtualbox-memory "4096" \
+      --virtualbox-cpu-count "-1" >&2
+  else
+    >&2 echo "Machine not found, must specify a driver: $0 (vmware|virtualbox)"
+  fi
+fi
+
+docker-machine env nanocf

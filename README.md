@@ -6,10 +6,12 @@ NanoCF is a full Cloud Foundry installation in a single Docker container.
 
 You must be able to run docker images in privileged mode to run NanoCF.
 
-To setup docker-machine for building and running NanoCF on Mac OS X with VMWare Fusion:
+To setup docker-machine for building and running NanoCF on Mac OS X:
 ```bash
   $ cd nanocf
-  $ eval "$(./setup-osx-vmware)"
+  $ eval "$(./setup-osx virtualbox)"
+  $ # OR
+  $ eval "$(./setup-osx vmware)"
 ```
 
 ## Running
@@ -42,6 +44,6 @@ To build MicroPCF:
 ```bash
   $ git clone --recursive https://github.com/sclevine/nanocf
   $ cd nanocf
-  $ eval "$(./setup-osx-vmware)"
+  $ eval "$(./setup-osx vmware)"
   $ ./build
 ```
