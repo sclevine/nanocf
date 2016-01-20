@@ -15,6 +15,8 @@ jobs:
   - name: run-nanocf
     plan:
     - get: nanocf
+      params:
+        submodules: none
     - task: run
       file: nanocf/ci/tasks/run/task.yml
       config:
