@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+
+exec 3>&1 4>&2 >>/var/micropcf/run.log 2>&1
+
+domain=$1
+ip=$(ip route get 1 | awk '{print $NF;exit}')
+old_ip=$(cat /var/micropcf/ip)
+
+if [[ -z $domain ]]; then
+  domain=${ip}.xip.io
+fi
+
+echo "address=/$domain/$ip" > /etc/dnsmasq.d/domain
+echo "listen-address=$ip" > /etc/dnsmasq.d/interface
+
+host_ns="$(grep -v "nameserver \($ip\|$old_ip\|127.0.0.1\)" /etc/resolv.conf | grep -m 1 '^nameserver')"
+cat <<EOF >/etc/resolv.conf
+nameserver 127.0.0.1
+nameserver $ip
+$host_ns
+EOF
+
+IGNORE_RESOLVCONF=yes /etc/init.d/dnsmasq start
+
+exec 1>&3 2>&4
+
+/var/micropcf/run "$domain"
+
+[[ $DOCKER_RUN_BLOCKS = true ]] && tail -f /dev/null

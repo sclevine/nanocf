@@ -2,7 +2,7 @@
 
 set -ex
 
-damain=local.nanocf.io
+domain=local.nanocf.io
 DOCKER_RUN_BLOCKS=false /var/micropcf/docker-run "$domain"
 
 cf api "api.$domain" --skip-ssl-validation

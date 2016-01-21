@@ -33,10 +33,12 @@ If you're running NanoCF with docker-machine, the container will only
 be addressable from the docker-machine VM. Consider mounting your local
 workspace in the VM and using the `cf` utility installed in the container:
 ```bash
-  $ docker run -m 3g --privileged -v /mnt/hgfs/$PWD:/workspace sclevine/nanocf nanocf.sclevine.org
+  $ docker run -m 3g --privileged -v /mnt/hgfs/$PWD:/workspace sclevine/nanocf
   $ docker exec <container-ip> bash
   > $ cf push ...
 ```
+This approach does not suffer from xip.io flakiness, because dnsmasq replaces
+xip.io inside of the container.
 
 ## Building
 

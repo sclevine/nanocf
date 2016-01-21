@@ -6,6 +6,7 @@ version=${1:-latest}
 image=sclevine/nanocf:$version
 
 nanocf_dir=$(cd `dirname "$0"` && pwd)
+image_dir=$nanocf_dir/image
 micropcf_dir=$nanocf_dir/micropcf
 releases_dir=$micropcf_dir/images/releases
 
@@ -25,9 +26,10 @@ patch_repo "$releases_dir/cf-release/src/consul-release"
 patch_repo "$releases_dir/diego-release"
 
 releases='diego cf garden-linux etcd'
-"$micropcf_dir/images/bosh/build" "$nanocf_dir/assets" $releases
+"$micropcf_dir/images/bosh/build" "$image_dir/assets" $releases
+cp -r "$micropcf_dir"/images/{manifest.yml,scripts} "$image_dir/assets/"
 
-docker build -t "$image" $@ "$nanocf_dir"
+docker build -t "$image" $@ "$image_dir"
 id=$(docker run -d -m 3g --privileged "$image")
 docker attach "$id"
-docker commit -c 'ENTRYPOINT ["/var/micropcf/run-docker"]' "$id" "$image"
+docker commit -c 'ENTRYPOINT ["/var/micropcf/docker-run"]' "$id" "$image"
