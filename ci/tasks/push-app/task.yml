@@ -3,5 +3,7 @@ platform: linux
 image: docker:///sclevine/nanocf
 inputs:
 - name: nanocf
+- name: container-volume
+  path: /var/vcap/data/garden/aufs_graph
 run:
   path: nanocf/ci/tasks/push-app/run.sh
