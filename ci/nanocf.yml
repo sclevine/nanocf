@@ -18,10 +18,9 @@ jobs:
       params:
         submodules: none
     - task: run
+      privileged: true
       tags: [ssd-worker]
       file: nanocf/ci/tasks/push-app/task.yml
-      config:
-        privileged: true
 
   - name: push-app-ebs
     plan:
@@ -29,9 +28,8 @@ jobs:
       params:
         submodules: none
     - task: run
+      privileged: true
       file: nanocf/ci/tasks/push-app/task.yml
-      config:
-        privileged: true
 
   - name: push-app-vsphere
     plan:
@@ -39,7 +37,6 @@ jobs:
       params:
         submodules: none
     - task: run
+      privileged: true
       tags: [vsphere-linux-worker]
       file: nanocf/ci/tasks/push-app/task.yml
-      config:
-        privileged: true
