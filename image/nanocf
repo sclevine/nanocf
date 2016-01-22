@@ -2,6 +2,12 @@
 
 set -e
 
+if [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
+  >&2 echo "Usage:"
+  >&2 echo -e "\t$0 [domain]"
+  exit 0
+fi
+
 exec 3>&1 4>&2 >>/var/micropcf/run.log 2>&1
 
 domain=$1
@@ -23,6 +29,12 @@ $host_ns
 EOF
 
 IGNORE_RESOLVCONF=yes /etc/init.d/dnsmasq start
+
+garden_graph=/var/vcap/data/garden/aufs_graph
+if ! mountpoint "$garden_graph"; then
+  mkdir -p "$garden_graph"
+  mount -t tmpfs tmpfs "$garden_graph"
+fi
 
 exec 1>&3 2>&4
 

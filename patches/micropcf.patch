@@ -7,7 +7,7 @@ index 5d8dff5..f5c1a4d 100755
  grep -q 'export TMPDIR=\/tmp\/cc_tmp' "$cc_worker_ctl" || sed -i '2iexport TMPDIR=/tmp/cc_tmp' "$cc_worker_ctl"
  
 -start runsvdir || true
-+/usr/sbin/runsvdir-start &
++nohup /usr/sbin/runsvdir-start &
  
  while [[ $(total_services) = 0 ]]; do
    sleep 1

@@ -24,4 +24,5 @@ RUN \
 
 COPY assets /opt/bosh-provisioner/assets
 COPY config.json /opt/bosh-provisioner/
-COPY provision docker concourse /var/micropcf/
+COPY provision /var/micropcf/
+COPY nanocf /usr/bin/
