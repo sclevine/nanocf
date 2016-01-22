@@ -23,7 +23,6 @@ RUN \
   curl -L "https://github.com/cloudfoundry-incubator/routing-api-cli/releases/download/${RTR_VERSION}/rtr-linux-amd64.tgz" | tar -C /usr/local/bin -xz && \
   /bin/echo -e 'user=root\nbind-interfaces' > /etc/dnsmasq.d/nanocf
 
-ADD assets /opt/bosh-provisioner/assets
-ADD config.json /opt/bosh-provisioner/
-ADD provision /var/micropcf/
-ADD docker-run /var/micropcf/
+COPY assets /opt/bosh-provisioner/assets
+COPY config.json /opt/bosh-provisioner/
+COPY provision docker-run concourse /var/micropcf/

@@ -11,9 +11,6 @@ resources:
       branch: master
       paths: [build,image,micropcf,patches]
 
-  - name: container-volume
-    type: time
-
 jobs:
   - name: push-app-ssd
     plan:
@@ -39,7 +36,6 @@ jobs:
     - get: nanocf
       params:
         submodules: none
-    - get: container-volume
     - task: run
       privileged: true
       tags: [vsphere-linux-worker]

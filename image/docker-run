@@ -28,4 +28,6 @@ exec 1>&3 2>&4
 
 /var/micropcf/run "$domain"
 
-[[ $DOCKER_RUN_BLOCKS = true ]] && tail -f /dev/null
+if [[ $DOCKER_RUN_BLOCKS = true ]]; then
+  tail -f /dev/null
+fi

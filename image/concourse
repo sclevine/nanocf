@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+garden_graph=/var/vcap/data/garden/aufs_graph
+
+mkdir -p "$garden_graph"
+mount -t tmpfs tmpfs "$garden_graph"
+
+DOCKER_RUN_BLOCKS=false /var/micropcf/docker-run local.nanocf.io
