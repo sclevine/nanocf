@@ -32,4 +32,4 @@ cp -r "$micropcf_dir"/images/{manifest.yml,scripts} "$image_dir/assets/"
 docker build -t "$image" $@ "$image_dir"
 id=$(docker run -d -m 3g --privileged "$image")
 docker attach "$id"
-docker commit -c 'ENTRYPOINT ["/usr/bin/nanocf"]' "$id" "$image"
+docker commit -c 'ENTRYPOINT ["/usr/local/bin/nanocf"]' "$id" "$image"

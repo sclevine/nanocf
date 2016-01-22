@@ -24,5 +24,5 @@ RUN \
 
 COPY assets /opt/bosh-provisioner/assets
 COPY config.json /opt/bosh-provisioner/
-COPY provision /var/micropcf/
-COPY nanocf /usr/bin/
+COPY provision post-run /var/micropcf/
+COPY nanocf /usr/local/bin/
