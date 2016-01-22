@@ -3,7 +3,6 @@ FROM ubuntu:14.04.3
 ENV HOME /root
 ENV CF_VERSION 6.14.1
 ENV RTR_VERSION 2.3.0
-ENV DOCKER_RUN_BLOCKS true
 
 EXPOSE 80 443 2222
 VOLUME ["/var/vcap/data/garden/aufs_graph"]
