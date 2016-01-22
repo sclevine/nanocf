@@ -10,25 +10,34 @@ resources:
       uri: https://github.com/sclevine/nanocf
       branch: master
       paths: [build,image,micropcf,patches]
+  - name: lattice-app
+    type: git
+    source:
+      uri: https://github.com/cloudfoundry-samples/lattice-app
+      branch: master
 
 jobs:
-  - name: push-app-ssd
-    plan:
-    - get: nanocf
-      params:
-        submodules: none
-    - task: run
-      privileged: true
-      tags: [ssd-worker]
-      file: nanocf/ci/tasks/push-app/task.yml
-
   - name: push-app-ebs
     plan:
     - get: nanocf
       params:
         submodules: none
-    - task: run
+    - get: app
+      resource: lattice-app
+    - task: push-app
       privileged: true
+      file: nanocf/ci/tasks/push-app/task.yml
+
+  - name: push-app-ssd
+    plan:
+    - get: nanocf
+      params:
+        submodules: none
+    - get: app
+      resource: lattice-app
+    - task: push-app
+      privileged: true
+      tags: [ssd-worker]
       file: nanocf/ci/tasks/push-app/task.yml
 
   - name: push-app-vsphere
@@ -36,7 +45,9 @@ jobs:
     - get: nanocf
       params:
         submodules: none
-    - task: run
+    - get: app
+      resource: lattice-app
+    - task: push-app
       privileged: true
       tags: [vsphere-linux-worker]
       file: nanocf/ci/tasks/push-app/task.yml

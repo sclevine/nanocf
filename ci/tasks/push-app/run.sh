@@ -2,7 +2,9 @@
 
 set -ex
 
-/var/micropcf/concourse
+nanocf local.nanocf.io
 
-cf push app -o cloudfoundry/lattice-app -m 32M
-curl -v "http://app.local.nanocf.io"
+cd app
+cf push some-app
+
+curl -v "http://some-app.local.nanocf.io"
