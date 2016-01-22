@@ -32,4 +32,4 @@ cp -r "$micropcf_dir"/images/{manifest.yml,scripts} "$image_dir/assets/"
 docker build -t "$image" $@ "$image_dir"
 id=$(docker run -d -m 3g --privileged "$image")
 docker attach "$id"
-docker commit -c 'ENTRYPOINT ["/var/micropcf/docker-run"]' "$id" "$image"
+docker commit -c 'ENTRYPOINT ["/var/micropcf/docker"]' "$id" "$image"
