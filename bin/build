@@ -5,7 +5,7 @@ set -e
 version=${1:-latest}
 image=sclevine/nanocf:$version
 
-nanocf_dir=$(cd `dirname "$0"` && pwd)
+nanocf_dir=$(cd `dirname "$0"` && cd .. && pwd)
 image_dir=$nanocf_dir/image
 micropcf_dir=$nanocf_dir/micropcf
 releases_dir=$micropcf_dir/images/releases
