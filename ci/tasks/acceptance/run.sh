@@ -8,6 +8,8 @@ nanocf local.nanocf
 curl -L https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -xz
 ( cd /usr/local/bin && ln -s ../go/bin/* . )
 
+apt-get -qqy install git
+
 git -C nanocf submodule update --init micropcf
 git -C nanocf/micropcf submodule update --init test/src/github.com/cloudfoundry/cf-acceptance-tests
 git -C nanocf/micropcf submodule update --init test/src/github.com/cloudfoundry-incubator/diego-acceptance-tests
