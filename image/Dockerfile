@@ -17,7 +17,7 @@ RUN \
   apt-get -qqy --force-yes dist-upgrade && \
   apt-get -qqy update && \
   apt-get -qqy install wget curl unzip zip jq \
-    libruby2.1 ruby2.1 aufs-tools iptables dnsmasq
+    libruby2.1 ruby2.1 aufs-tools iptables dnsmasq openssh-clients
 
 RUN \
   curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&version=${CF_VERSION}&source=github-rel" | tar -C /usr/local/bin -xz && \
