@@ -45,10 +45,10 @@ finishes booting:
 ```
 The `cf` CLI is installed in the container and pre-targetted at NanoCF.
 Inside of the container the CF system domain is resolved using dnsmasq, so
-using the NanoCF shell to push apps will not fail due to xip.io flakiness.
+using the NanoCF shell to push apps is not affected by xip.io flakiness.
 This is the recommended way of using NanoCF with
 [Docker Machine](https://docs.docker.com/machine/), as a NanoCF container in
-a Docker Machine is only addressable from within the Docker Machine VM.
+a machine is only addressable from within the machine VM.
 
 To push local apps from inside of the container, consider using a volume mount:
 ```bash
@@ -71,7 +71,7 @@ to be functional outside of the container, one of the following must be true:
    servers (in `/etc/resolv.conf`, for example).
 
 For convenience, \*.nanocf.sclevine.org resolves to the first container IP
-address (172.17.0.2) assigned by docker-machine.
+address (172.17.0.2) assigned by Docker Machine.
 
 If you are running NanoCF in Docker Machine, it may be difficult to use
 the `cf` utility or application routes from your host system.
@@ -125,10 +125,10 @@ curl -v "http://myapp.local.nanocf"
 
 ## Building
 
-To build MicroPCF:
+To build NanoCF:
 ```bash
   $ git clone --recursive https://github.com/sclevine/nanocf
   $ cd nanocf
-  $ eval "$(./bin/setup-osx vmware)" # or virtualbox
+  $ eval "$(./bin/setup-osx virtualbox)" # or vmware
   $ ./bin/build
 ```
