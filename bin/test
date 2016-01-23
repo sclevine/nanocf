@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+version=${1:-latest}
+image=sclevine/nanocf:$version
+
+nanocf_dir=$(cd `dirname "$0"` && cd .. && pwd)
+micropcf_dir=$nanocf_dir/micropcf
+
+docker run -m 3g --entrypoint /bin/bash --privileged -v "$micropcf_dir:/micropcf" "$image" \
+  -c 'nanocf local.nanocf && cd /micropcf/bin && ./cats local.nanocf && ./dats local.nanocf'

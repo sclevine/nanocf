@@ -1,0 +1,8 @@
+---
+platform: linux
+image: docker:///sclevine/nanocf
+inputs:
+- name: nanocf
+- name: app
+run:
+  path: nanocf/ci/tasks/smoketest/run.sh

@@ -1,0 +1,88 @@
+groups:
+- name: smoketest
+  jobs:
+  - smoketest-ebs
+  - smoketest-ssd
+  - smoketest-vsphere
+- name: acceptance
+  jobs:
+  - acceptance-ebs
+  - acceptance-ssd
+  - acceptance-vsphere
+
+resources:
+- name: nanocf
+  type: git
+  source:
+    uri: https://github.com/sclevine/nanocf
+    branch: master
+- name: lattice-app
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry-samples/lattice-app
+    branch: master
+
+jobs:
+- name: smoketest-ebs
+  plan:
+  - get: nanocf
+    params:
+      submodules: none
+  - get: app
+    resource: lattice-app
+  - task: smoketest
+    privileged: true
+    file: nanocf/ci/tasks/smoketest/task.yml
+
+- name: smoketest-ssd
+  plan:
+  - get: nanocf
+    params:
+      submodules: none
+  - get: app
+    resource: lattice-app
+  - task: smoketest
+    privileged: true
+    tags: [ssd-worker]
+    file: nanocf/ci/tasks/smoketest/task.yml
+
+- name: smoketest-vsphere
+  plan:
+  - get: nanocf
+    params:
+      submodules: none
+  - get: app
+    resource: lattice-app
+  - task: smoketest
+    privileged: true
+    tags: [vsphere-linux-worker]
+    file: nanocf/ci/tasks/smoketest/task.yml
+
+- name: acceptance-ebs
+  plan:
+  - get: nanocf
+    params:
+      submodules: none
+  - task: acceptance
+    privileged: true
+    file: nanocf/ci/tasks/acceptance/task.yml
+
+- name: acceptance-ssd
+  plan:
+  - get: nanocf
+    params:
+      submodules: none
+  - task: acceptance
+    privileged: true
+    tags: [ssd-worker]
+    file: nanocf/ci/tasks/acceptance/task.yml
+
+- name: acceptance-vsphere
+  plan:
+  - get: nanocf
+    params:
+      submodules: none
+  - task: acceptance
+    privileged: true
+    tags: [vsphere-linux-worker]
+    file: nanocf/ci/tasks/acceptance/task.yml

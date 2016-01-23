@@ -56,10 +56,8 @@ To push local apps from inside of the container, consider using a volume mount:
   > $ cd /app/myapp
   > $ cf push myapp ...
 ```
-If you are using Docker Machine, it may be necessary to prefix the local
-directory path with `/mnt/hgfs/` (ex. `/mnt/hgfs/$PWD`).
 
-A custom domain may be provided as an argument to the container:
+A custom domain may be provided as an argument to `docker run`:
 ```bash
   $ docker run -m 3g --privileged sclevine/nanocf example.com
 ```
