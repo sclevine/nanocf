@@ -11,13 +11,17 @@ micropcf_dir=$nanocf_dir/micropcf
 releases_dir=$micropcf_dir/images/releases
 
 trap cleanup EXIT
-function cleanup { eval "$cleanup"; }
-cleanup=true
+function cleanup {
+  eval "$unpatch"
+  [[ ! -z $temp_container ]] && docker rm -v -f "$temp_container" || true
+  [[ ! -z $temp_image ]] && docker rmi -f "$temp_image" || true
+}
 
+unpatch=true
 function patch_repo() {
   local patch=$nanocf_dir/patches/$(basename "$1").patch
   git -C "$1" apply "$patch"
-  cleanup="${cleanup}; git -C \"$1\" apply -R \"$patch\""
+  unpatch="${unpatch}; git -C \"$1\" apply -R \"$patch\""
 }
 
 patch_repo "$micropcf_dir"
@@ -29,7 +33,8 @@ releases='diego cf garden-linux etcd'
 "$micropcf_dir/images/bosh/build" "$image_dir/assets" $releases
 cp -r "$micropcf_dir"/images/{manifest.yml,scripts} "$image_dir/assets/"
 
-docker build -t "$image" $@ "$image_dir"
-id=$(docker run -d -m 3g --privileged "$image")
-docker attach "$id"
-docker commit -c 'ENTRYPOINT ["/usr/local/bin/nanocf"]' "$id" "$image"
+temp_image=$(uuidgen | tr -d - | tr [:upper:] [:lower:])
+docker build --force-rm -t "$temp_image" $@ "$image_dir"
+temp_container=$(docker run -d -m 3g --privileged "$temp_image")
+docker attach "$temp_container"
+docker commit -c 'ENTRYPOINT ["/usr/local/bin/nanocf"]' "$temp_container" "$image"

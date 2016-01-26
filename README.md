@@ -13,6 +13,9 @@ privileged tasks.
 
 You must be able to run docker images in privileged mode to run or build NanoCF.
 
+Building NanoCF requires the BOSH CLI gem. Therefore, you must have Ruby
+installed to build NanoCF.
+
 Concourse workers used to run NanoCF should have high I/O throughput as well as
 enough system memory to store all pushed application containers.
 
@@ -129,6 +132,7 @@ To build NanoCF:
 ```bash
   $ git clone --recursive https://github.com/sclevine/nanocf
   $ cd nanocf
+  $ bundle install
   $ eval "$(./bin/setup-osx virtualbox)" # or vmware
   $ ./bin/build
 ```

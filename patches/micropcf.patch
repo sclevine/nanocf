@@ -1,7 +1,29 @@
+diff --git a/images/scripts/reset b/images/scripts/reset
+index a3552bc..9bdaf30 100755
+--- a/images/scripts/reset
++++ b/images/scripts/reset
+@@ -20,7 +20,7 @@ while [[ $(stopped_services) -lt $(total_services) ]]; do
+   sleep 1
+ done
+ 
+-stop runsvdir || true
++killall -HUP runsvdir || true
+ 
+ >&3 echo "Services stopped. Resetting data..."
+ rm -rf /var/vcap/{store/*,nfs} /var/vcap/data/{compile,tmp}
 diff --git a/images/scripts/run b/images/scripts/run
-index 5d8dff5..f5c1a4d 100755
+index e71d494..d420628 100755
 --- a/images/scripts/run
 +++ b/images/scripts/run
+@@ -25,7 +25,7 @@ while [[ $(total_services) != 0 ]] && [[ $(stopped_services) -lt $(total_service
+   sleep 1
+ done
+ 
+-stop runsvdir || true
++killall -HUP runsvdir || true
+ 
+ while [[ $(total_services) != 0 ]]; do
+   sleep 1
 @@ -49,7 +49,7 @@ chmod 1777 /tmp/cc_tmp
  cc_worker_ctl=/var/vcap/jobs/cloud_controller_ng/bin/cloud_controller_worker_ctl
  grep -q 'export TMPDIR=\/tmp\/cc_tmp' "$cc_worker_ctl" || sed -i '2iexport TMPDIR=/tmp/cc_tmp' "$cc_worker_ctl"

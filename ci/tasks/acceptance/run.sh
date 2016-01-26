@@ -4,12 +4,6 @@ set -ex
 
 nanocf local.nanocf
 
-# Remove these lines after next image build
-curl -L https://storage.googleapis.com/golang/go1.5.3.linux-amd64.tar.gz | tar -C /usr/local -xz
-( cd /usr/local/bin && ln -s ../go/bin/* . )
-apt-get -qqy install openssh-client
-###
-
 apt-get -qqy install git
 
 git -C nanocf submodule update --init micropcf

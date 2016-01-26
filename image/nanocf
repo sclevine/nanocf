@@ -28,7 +28,7 @@ nameserver $ip
 $host_ns
 EOF
 
-IGNORE_RESOLVCONF=yes /etc/init.d/dnsmasq start
+service dnsmasq start
 
 garden_graph=/var/vcap/data/garden/aufs_graph
 if ! mountpoint "$garden_graph"; then

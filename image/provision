@@ -17,9 +17,9 @@ apt-get -qqy install runit
 /usr/sbin/runsvdir-start &
 "$assets_dir/bosh-provisioner" -configPath=/opt/bosh-provisioner/config.json
 
+rm -rf /opt/bosh-provisioner
+
 chmod 1777 /tmp
-rm -rf /opt/bosh-provisioner /var/vcap/data/{compile,tmp} /var/vcap/nfs
-echo manual > /etc/init/runsvdir.override
 apt-get -y autoremove
 apt-get -y clean
 
