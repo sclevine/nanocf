@@ -1,13 +1,13 @@
 diff --git a/jobs/consul_agent/templates/agent_ctl.sh.erb b/jobs/consul_agent/templates/agent_ctl.sh.erb
-index 5c4463b..a7fe132 100644
+index f8d8cd4..e3279b0 100644
 --- a/jobs/consul_agent/templates/agent_ctl.sh.erb
 +++ b/jobs/consul_agent/templates/agent_ctl.sh.erb
-@@ -102,7 +102,7 @@ EOF
-       # enabling updates and then updating it with resolvconf -u seems to add
-       # dns entries from where the box was generated.
-       if ! grep -q 127.0.0.1 /etc/resolv.conf; then
--        sed -i -e '1i nameserver 127.0.0.1' /etc/resolv.conf
-+        echo -e "nameserver 127.0.0.1\n$(cat /etc/resolv.conf)" > /etc/resolv.conf
-       fi
-     fi
+@@ -47,7 +47,7 @@ function setup_resolvconf() {
+ 	  if [[ "$(stat -c "%s" "${resolvconf_file}")" = "0" ]]; then
+ 		  echo 'nameserver 127.0.0.1' > "${resolvconf_file}"
+ 	  else
+-		  sed -i -e '1i nameserver 127.0.0.1' "${resolvconf_file}"
++		  echo -e "nameserver 127.0.0.1\n$(cat /etc/resolv.conf)" > /etc/resolv.conf
+ 	  fi
+   fi
  

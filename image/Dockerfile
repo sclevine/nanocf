@@ -23,10 +23,11 @@ RUN \
   curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&version=${CF_VERSION}&source=github-rel" | tar -C /usr/local/bin -xz && \
   curl -L "https://github.com/cloudfoundry-incubator/routing-api-cli/releases/download/${RTR_VERSION}/rtr-linux-amd64.tgz" | tar -C /usr/local/bin -xz && \
   curl -L "https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xz && \
+  /bin/echo 'conf-dir=/etc/dnsmasq.d' >> /etc/dnsmasq.conf && \
   /bin/echo -e 'user=root\nbind-interfaces' > /etc/dnsmasq.d/nanocf && \
   /bin/echo 'IGNORE_RESOLVCONF=yes' > /etc/default/dnsmasq
 
 COPY assets /opt/bosh-provisioner/assets
 COPY config.json /opt/bosh-provisioner/
-COPY provision post-run /var/micropcf/
-COPY nanocf /usr/local/bin/
+COPY provision /var/micropcf/
+COPY nanocf nanocf-test /usr/local/bin/

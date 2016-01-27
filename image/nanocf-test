@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e
+
+function usage() {
+  >&2 echo "Usage:"
+  >&2 echo -e "\t$0 domain [extra suite ...]"
+}
+
+if [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
+  usage && exit 0
+elif [[ -z $1 ]]; then
+  usage && exit 1
+elif [[ ! -d /test ]]; then
+  >&2 echo "NanoCF test directory must be present at /test."
+  exit 1
+fi
+
+domain=$1
+
+export CONFIG=`mktemp -t config.XXXXXXXX`
+cat <<EOF >$CONFIG
+{
+  "api": "api.$domain",
+  "admin_user": "admin",
+  "admin_password": "admin",
+  "apps_domain": "$domain",
+  "system_domain": "$domain",
+  "client_secret": "tcp-emitter-secret",
+  "skip_ssl_validation": true,
+  "default_timeout": 1200,
+  "cf_push_timeout": 1200,
+  "long_curl_timeout": 1200,
+  "broker_start_timeout": 1200,
+  "use_http": true
+}
+EOF
+
+pushd /test/src/github.com/cloudfoundry/cf-acceptance-tests >/dev/null
+  GOPATH=/test ./bin/test \
+    -skip='NO_DIEGO_SUPPORT|SSO Lifecycle' \
+    -slowSpecThreshold=480 \
+    ${@:2} \
+    . apps detect internet_dependent security_groups \
+    docker operator routing routing_api services v3
+popd >/dev/null

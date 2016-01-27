@@ -1,7 +1,10 @@
 # NanoCF
 
 [NanoCF](https://hub.docker.com/r/sclevine/nanocf/) is a full Cloud Foundry
-installation in a single Docker container.
+installation in a single Docker container. It is currently based on
+[Cloud Foundry Release v228](https://github.com/cloudfoundry/cf-release/tree/v228)
+and it passes the
+[Cloud Foundry Acceptance Tests](https://github.com/cloudfoundry/cf-acceptance-tests).
 
 It is compatible with both [Docker](https://www.docker.com) and
 [Garden Linux](https://github.com/cloudfoundry-incubator/garden-linux/).
@@ -11,12 +14,12 @@ privileged tasks.
 
 ## Setup
 
-You must be able to run docker images in privileged mode to run or build NanoCF.
+You must be able to run docker images in privileged mode to build or run NanoCF.
 
 Building NanoCF requires the BOSH CLI gem. Therefore, you must have Ruby
 installed to build NanoCF.
 
-Concourse workers used to run NanoCF should have high I/O throughput as well as
+Concourse workers running NanoCF should have high I/O throughput as well as
 enough system memory to store all pushed application containers.
 
 ### Mac OS X
@@ -126,7 +129,11 @@ cf push myapp
 curl -v "http://myapp.local.nanocf"
 ```
 
-## Building
+To run CATs against a NanoCF task deployed to Concourse, make the repository's
+`test` directory available at `/test` in the NanoCF container, and run the
+`nanocf-test` command. NanoCF must be booted with the `nanocf` command first.
+
+## Development
 
 To build NanoCF:
 ```bash
@@ -136,3 +143,8 @@ To build NanoCF:
   $ eval "$(./bin/setup-osx virtualbox)" # or vmware
   $ ./bin/build
 ```
+To run CATs against an sclevine/nanocf image:
+```bash
+  $ ./bin/test
+```
+

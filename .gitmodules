@@ -1,3 +1,6 @@
 [submodule "micropcf"]
 	path = micropcf
 	url = https://github.com/pivotal-cf/micropcf
+[submodule "test/src/github.com/cloudfoundry/cf-acceptance-tests"]
+	path = test/src/github.com/cloudfoundry/cf-acceptance-tests
+	url = https://github.com/cloudfoundry/cf-acceptance-tests
