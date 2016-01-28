@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+domain=$1
+
+export CONFIG=`mktemp -t config.XXXXXXXX`
+cat <<EOF >$CONFIG
+{
+  "api": "api.$domain",
+  "admin_user": "admin",
+  "admin_password": "admin",
+  "apps_domain": "$domain",
+  "system_domain": "$domain",
+  "client_secret": "tcp-emitter-secret",
+  "skip_ssl_validation": true,
+  "default_timeout": 1200,
+  "cf_push_timeout": 1200,
+  "long_curl_timeout": 1200,
+  "broker_start_timeout": 1200,
+  "use_http": true
+}
+EOF
+
+test_dir=$(cd `dirname $0` && pwd)
+
+pushd "$test_dir/src/github.com/cloudfoundry/cf-acceptance-tests" >/dev/null
+  GOPATH=$test_dir ./bin/test \
+    -skip='NO_DIEGO_SUPPORT|SSO Lifecycle' \
+    -slowSpecThreshold=480 \
+    ${@:2} \
+    . apps detect internet_dependent security_groups \
+    docker operator routing routing_api services v3
+popd >/dev/null
