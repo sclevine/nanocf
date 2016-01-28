@@ -36,6 +36,8 @@ if ! mountpoint "$garden_graph"; then
   mount -t tmpfs tmpfs "$garden_graph"
 fi
 
+cron
+
 exec 1>&3 2>&4
 
 /var/micropcf/run "$domain"
