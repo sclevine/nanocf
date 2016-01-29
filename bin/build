@@ -8,7 +8,7 @@ image=sclevine/nanocf:$version
 nanocf_dir=$(cd `dirname "$0"` && cd .. && pwd)
 image_dir=$nanocf_dir/image
 micropcf_dir=$nanocf_dir/micropcf
-releases_dir=$micropcf_dir/images/releases
+releases_dir=$micropcf_dir/releases
 
 trap cleanup EXIT
 function cleanup {
@@ -30,7 +30,7 @@ patch_repo "$releases_dir/cf-release/src/consul-release"
 patch_repo "$releases_dir/diego-release"
 
 releases='diego cf garden-linux etcd'
-"$micropcf_dir/images/bosh/build" "$image_dir/assets" $releases
+"$micropcf_dir/bosh/build" "$image_dir/assets" $releases
 cp -r "$micropcf_dir"/images/{manifest.yml,scripts} "$image_dir/assets/"
 
 temp_image=$(uuidgen | tr -d - | tr [:upper:] [:lower:])

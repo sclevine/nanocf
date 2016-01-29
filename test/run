@@ -29,6 +29,6 @@ pushd "$test_dir/src/github.com/cloudfoundry/cf-acceptance-tests" >/dev/null
     -skip='NO_DIEGO_SUPPORT|SSO Lifecycle' \
     -slowSpecThreshold=480 \
     ${@:2} \
-    . apps detect internet_dependent security_groups \
-    docker operator routing routing_api services v3
+    . apps detect docker internet_dependent security_groups ssh \
+    operator routing routing_api services v3
 popd >/dev/null
