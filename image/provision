@@ -17,10 +17,11 @@ apt-get -qqy install runit
 /usr/sbin/runsvdir-start &
 "$assets_dir/bosh-provisioner" -configPath=/opt/bosh-provisioner/config.json
 
-rm -rf /opt/bosh-provisioner
-
 chmod 1777 /tmp
+/var/micropcf/reset
+
 apt-get -y autoremove
 apt-get -y clean
 
-/var/micropcf/reset
+rm -rf /opt/bosh-provisioner
+find /run -name '*.pid' | xargs rm -f
