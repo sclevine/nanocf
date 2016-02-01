@@ -16,7 +16,7 @@ RUN \
   apt-get -qqy update && \
   apt-get -qqy --force-yes dist-upgrade && \
   apt-get -qqy update && \
-  apt-get -qqy install wget curl unzip zip jq \
+  apt-get -qqy install wget curl unzip zip jq psmisc \
     libruby2.1 ruby2.1 aufs-tools iptables dnsmasq openssh-client
 
 RUN \

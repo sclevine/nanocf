@@ -7,7 +7,7 @@ index a3552bc..9bdaf30 100755
  done
  
 -stop runsvdir || true
-+killall -HUP runsvdir || true
++start-stop-daemon -Kqo -s HUP -n runsvdir
  
  >&3 echo "Services stopped. Resetting data..."
  rm -rf /var/vcap/{store/*,nfs} /var/vcap/data/{compile,tmp}
@@ -20,7 +20,7 @@ index e71d494..d420628 100755
  done
  
 -stop runsvdir || true
-+killall -HUP runsvdir || true
++start-stop-daemon -Kqo -s HUP -n runsvdir
  
  while [[ $(total_services) != 0 ]]; do
    sleep 1
@@ -29,7 +29,7 @@ index e71d494..d420628 100755
  grep -q 'export TMPDIR=\/tmp\/cc_tmp' "$cc_worker_ctl" || sed -i '2iexport TMPDIR=/tmp/cc_tmp' "$cc_worker_ctl"
  
 -start runsvdir || true
-+nohup /usr/sbin/runsvdir-start &
++start-stop-daemon -Sbqo -x /usr/sbin/runsvdir-start
  
  while [[ $(total_services) = 0 ]]; do
    sleep 1
